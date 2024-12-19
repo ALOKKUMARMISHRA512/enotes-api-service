@@ -33,8 +33,8 @@ public class CategoryController {
 	
 	
 	@GetMapping("/get-category")
-	public List<Category> GetCategory(@RequestBody Category category){
-		List<Category> getCategory =  categoryService.getAllCategory(category);
+	public List<Category> GetCategory(){
+		List<Category> getCategory =  categoryService.getAllCategory();
 		return getCategory;
 
 	}

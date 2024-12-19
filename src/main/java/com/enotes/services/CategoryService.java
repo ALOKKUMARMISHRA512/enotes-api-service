@@ -12,7 +12,7 @@ public interface CategoryService {
 	
 	public Boolean saveCategory(Category category);
 	
-	public List<Category> getAllCategory(Category category);
+	public List<Category> getAllCategory();
 
 
 }
