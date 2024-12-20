@@ -6,8 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CategoryResponseDto {
-	
+
     private String message;
     private Object data;
-    
 }

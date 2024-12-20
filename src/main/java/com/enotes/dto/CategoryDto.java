@@ -1,7 +1,6 @@
 package com.enotes.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +18,8 @@ public class CategoryDto {
     @NotBlank(message = "Description is required")
     private String description;
 
-    @NotNull(message = "isActive is required")
-    private boolean isActive;
+    // Set default value to true
+    private boolean isActive = true;  // default value set here
 
     private Integer createdBy;
 

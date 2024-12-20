@@ -12,4 +12,6 @@ public interface CategoryService {
     Boolean saveCategory(CategoryDto categoryDto);
 
     Page<Category> getAllCategory(Pageable pageable);
+
+    List<Category> getAllActiveCategories();
 }
