@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.enotes.dto.CategoryDto;
 import com.enotes.models.Category;
 import com.enotes.services.CategoryService;
-import com.enotes.dto.ResponseDto;
+import com.enotes.dto.CategoryResponseDto;
 
 import jakarta.validation.Valid;
 
@@ -24,19 +24,21 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/save-category")
-    public ResponseEntity<ResponseDto> saveCategory(@RequestBody @Valid CategoryDto categoryDto) {
+    public ResponseEntity<CategoryResponseDto> saveCategory(@RequestBody @Valid CategoryDto categoryDto) {
         Boolean saveCategory = categoryService.saveCategory(categoryDto);
         if (saveCategory) {
-            return new ResponseEntity<>(new ResponseDto("Category saved successfully", null), HttpStatus.CREATED);
+            return new ResponseEntity<>(new CategoryResponseDto("Category saved successfully", null), HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(new ResponseDto("Failed to save category", null), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new CategoryResponseDto("Failed to save category", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/get-category")
-    public ResponseEntity<ResponseDto> getCategory(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<CategoryResponseDto> getCategory(@RequestParam(defaultValue = "0") int page,
                                                    @RequestParam(defaultValue = "10") int size) {
         Page<Category> categories = categoryService.getAllCategory(PageRequest.of(page, size));
-        return new ResponseEntity<>(new ResponseDto("Fetched categories successfully", categories), HttpStatus.OK);
+        return new ResponseEntity<>(new CategoryResponseDto("Fetched categories successfully", categories), HttpStatus.OK);
     }
+    
+    
 }
