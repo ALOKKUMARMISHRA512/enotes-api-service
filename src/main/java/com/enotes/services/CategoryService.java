@@ -1,18 +1,15 @@
 package com.enotes.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
+import com.enotes.dto.CategoryDto;
 import com.enotes.models.Category;
 
-
-
 public interface CategoryService {
-	
-	public Boolean saveCategory(Category category);
-	
-	public List<Category> getAllCategory();
 
+    Boolean saveCategory(CategoryDto categoryDto);
 
+    Page<Category> getAllCategory(Pageable pageable);
 }
