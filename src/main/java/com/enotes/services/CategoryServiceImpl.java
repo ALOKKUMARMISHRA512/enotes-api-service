@@ -1,5 +1,6 @@
 package com.enotes.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class CategoryServiceImpl implements CategoryService {
 		// TODO Auto-generated method stub
 		
 		category.setDeleted(false);
+		category.setActive(true);
+		category.setCreatedDate(LocalDateTime.now());
 		
 		Category saveCate = categoryRepository.save(category);
 		
