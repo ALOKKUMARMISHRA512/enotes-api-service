@@ -18,5 +18,5 @@ public interface CategoryService {
 
     Category getCategoryById(Long id);
     
-	
+    boolean deleteCategoryById(Long id);
 }

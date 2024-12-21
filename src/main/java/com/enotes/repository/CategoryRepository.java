@@ -10,5 +10,8 @@ import com.enotes.models.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     
-    List<Category> findByIsActiveTrue();  // Fetch active categories
+//    List<Category> findByIsActiveTrue();  // Fetch active categories
+    
+    List<Category> findByIsActiveTrueAndIsDeletedFalse();
+
 }

@@ -49,12 +49,18 @@ public class CategoryController {
         Page<Category> categories = categoryService.getAllCategory(pageRequest);
         return new ResponseEntity<>(new CategoryResponseDto("Fetched categories successfully", categories), HttpStatus.OK);
     }
+    
+    
+    
 
     @GetMapping("/get-active-categories")
-    public ResponseEntity<CategoryResponseDto> getActiveCategories() {
+    public ResponseEntity<List<Category>> getActiveCategories() {
         List<Category> activeCategories = categoryService.getAllActiveCategories();
-        return new ResponseEntity<>(new CategoryResponseDto("Fetched active categories successfully", activeCategories), HttpStatus.OK);
+        return ResponseEntity.ok(activeCategories);
     }
+
+    
+    
     
     @GetMapping("/get-category-byId/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
@@ -65,4 +71,18 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    
+    @DeleteMapping("/delete-category-byId/{id}")
+    public ResponseEntity<String> deleteCategoryById(@PathVariable Long id) {
+        boolean isDeleted = categoryService.deleteCategoryById(id); // Returns true if deleted
+        if (isDeleted) {
+            return ResponseEntity.ok("Category deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found");
+        }
+    }
+
+    
+    
+    
 }

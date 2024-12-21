@@ -54,8 +54,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllActiveCategories() {
-        return categoryRepository.findByIsActiveTrue();
+        return categoryRepository.findByIsActiveTrueAndIsDeletedFalse();
     }
+
 
 
     @Override
@@ -69,4 +70,23 @@ public class CategoryServiceImpl implements CategoryService {
     	}
         return null;
     }
+
+
+    
+    @Override
+    public boolean deleteCategoryById(Long id) {
+        // Check if category exists before deleting
+        if (categoryRepository.existsById(id)) {
+//          
+//        	categoryRepository.deleteById(id);
+        	Category cat  =  categoryRepository.getById(id);
+        	cat.setDeleted(true);
+        	categoryRepository.save(cat);
+            return true; // Successfully deleted
+        }
+        return false; // Category not found
+    }
+
+    
+	
 }
