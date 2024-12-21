@@ -2,6 +2,7 @@ package com.enotes.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.enotes.dto.CategoryDto;
+import com.enotes.dto.CategoryResponseDto;
 import com.enotes.models.Category;
 import com.enotes.repository.CategoryRepository;
 
@@ -53,5 +55,18 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getAllActiveCategories() {
         return categoryRepository.findByIsActiveTrue();
+    }
+
+
+    @Override
+    public Category getCategoryById(Long id) {
+    	
+    	Optional<Category> category = categoryRepository.findById(id);
+    	    	
+    	if(category.isPresent()) {
+        	Category cat = category.get();
+    		return cat;
+    	}
+        return null;
     }
 }

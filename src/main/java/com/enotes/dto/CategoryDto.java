@@ -18,7 +18,6 @@ public class CategoryDto {
     @NotBlank(message = "Description is required")
     private String description;
 
-    // Set default value to true
     private boolean isActive = true;  // default value set here
 
     private Integer createdBy;

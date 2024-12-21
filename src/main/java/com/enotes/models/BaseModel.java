@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
 public class BaseModel {
 
     @Column(name = "is_active")
