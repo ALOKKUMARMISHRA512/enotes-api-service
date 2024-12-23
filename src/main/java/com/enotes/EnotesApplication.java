@@ -12,6 +12,9 @@ public class EnotesApplication {
 		SpringApplication.run(EnotesApplication.class, args);
 	
 		
+		
+		
+		
 	}
 
 }
