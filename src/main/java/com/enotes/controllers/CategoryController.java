@@ -47,7 +47,13 @@ public class CategoryController {
                                                            @RequestParam(defaultValue = "asc") String sortDirection) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Order.asc(sortBy)));
         Page<Category> categories = categoryService.getAllCategory(pageRequest);
-        return new ResponseEntity<>(new CategoryResponseDto("Fetched categories successfully", categories), HttpStatus.OK);
+
+        // Filter out deleted categories
+        List<Category> filteredCategories = categories.getContent().stream()
+                .filter(category -> !category.isDeleted())
+                .toList();
+
+        return new ResponseEntity<>(new CategoryResponseDto("Fetched categories successfully", filteredCategories), HttpStatus.OK);
     }
     
     
