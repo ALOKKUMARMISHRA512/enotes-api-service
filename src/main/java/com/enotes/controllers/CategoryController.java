@@ -1,7 +1,6 @@
 package com.enotes.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.enotes.dto.CategoryDto;
@@ -41,23 +39,18 @@ public class CategoryController {
     }
 
     @GetMapping("/get-category")
-    public ResponseEntity<CategoryResponseDto> getCategory(@RequestParam(defaultValue = "0") int page,
-                                                           @RequestParam(defaultValue = "10") int size,
-                                                           @RequestParam(defaultValue = "id") String sortBy,
-                                                           @RequestParam(defaultValue = "asc") String sortDirection) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Order.asc(sortBy)));
+    public ResponseEntity<CategoryResponseDto> getCategory(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(direction, sortBy));
         Page<Category> categories = categoryService.getAllCategory(pageRequest);
 
-        // Filter out deleted categories
-        List<Category> filteredCategories = categories.getContent().stream()
-                .filter(category -> !category.isDeleted())
-                .toList();
-
-        return new ResponseEntity<>(new CategoryResponseDto("Fetched categories successfully", filteredCategories), HttpStatus.OK);
+        return new ResponseEntity<>(new CategoryResponseDto("Fetched categories successfully", categories.getContent()), HttpStatus.OK);
     }
-    
-    
-    
 
     @GetMapping("/get-active-categories")
     public ResponseEntity<List<Category>> getActiveCategories() {
@@ -65,30 +58,23 @@ public class CategoryController {
         return ResponseEntity.ok(activeCategories);
     }
 
-    
-    
-    
     @GetMapping("/get-category-byId/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-    	Category categoryResponseDto = categoryService.getCategoryById(id);
-        if (categoryResponseDto != null) {
-            return ResponseEntity.ok(categoryResponseDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        try {
+            Category category = categoryService.getCategoryById(id);
+            return ResponseEntity.ok(category);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found with ID: " + id);
         }
     }
-    
+
     @DeleteMapping("/delete-category-byId/{id}")
     public ResponseEntity<String> deleteCategoryById(@PathVariable Long id) {
-        boolean isDeleted = categoryService.deleteCategoryById(id); // Returns true if deleted
+        boolean isDeleted = categoryService.deleteCategoryById(id);
         if (isDeleted) {
             return ResponseEntity.ok("Category deleted successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found");
         }
     }
-
-    
-    
-    
 }

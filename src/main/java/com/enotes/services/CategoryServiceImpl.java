@@ -29,9 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public Boolean saveCategory(CategoryDto categoryDto) {
-    	  // Null check for input
+        // Null check for input
         if (ObjectUtils.isEmpty(categoryDto)) {
-            return false;
+            throw new IllegalArgumentException("Category data cannot be null");
         }
 
         Category category;
@@ -55,8 +55,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         // Save the category (insert or update)
-        Category savedCategory = categoryRepository.save(category);
-        return savedCategory != null;
+        categoryRepository.save(category);
+        return true;
     }
 
 
@@ -70,36 +70,24 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findByIsActiveTrueAndIsDeletedFalse();
     }
 
-
-
     @Override
     public Category getCategoryById(Long id) {
-    	
-    	Optional<Category> category = categoryRepository.findById(id);
-    	    	
-    	if(category.isPresent()) {
-        	Category cat = category.get();
-    		return cat;
-    	}
+        Optional<Category> category = categoryRepository.findById(id);
+        if(category.isPresent()) {
+            return category.get();
+        }
         return null;
     }
 
-
-    
     @Override
     public boolean deleteCategoryById(Long id) {
         // Check if category exists before deleting
         if (categoryRepository.existsById(id)) {
-//          
-//        	categoryRepository.deleteById(id);
-        	Category cat  =  categoryRepository.getById(id);
-        	cat.setDeleted(true);
-        	categoryRepository.save(cat);
+            Category cat = categoryRepository.getById(id);
+            cat.setDeleted(true);
+            categoryRepository.save(cat);
             return true; // Successfully deleted
         }
         return false; // Category not found
     }
-
-    
-	
 }

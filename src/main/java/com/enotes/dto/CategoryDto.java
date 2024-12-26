@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +21,8 @@ public class CategoryDto {
 
     @NotBlank(message = "Description is required")
     private String description;
-
+    
+    @NotNull
     private Boolean isActive ; 
     
     private Boolean isDeleted;
