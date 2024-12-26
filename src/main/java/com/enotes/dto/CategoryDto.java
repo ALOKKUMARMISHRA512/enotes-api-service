@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
+	
+	private Long id;
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -18,7 +20,10 @@ public class CategoryDto {
     @NotBlank(message = "Description is required")
     private String description;
 
-    private boolean isActive = true;  // default value set here
+    private Boolean isActive ; 
+    
+    private Boolean isDeleted;
+
 
     private Integer createdBy;
 

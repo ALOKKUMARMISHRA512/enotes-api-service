@@ -29,21 +29,34 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public Boolean saveCategory(CategoryDto categoryDto) {
+    	  // Null check for input
         if (ObjectUtils.isEmpty(categoryDto)) {
             return false;
         }
 
-        // Set default value for isActive if not provided
-        if (!categoryDto.isActive()) {
-            categoryDto.setActive(true);
-        }
-        
-        Category category = modelMapper.map(categoryDto, Category.class);
-        category.setCreatedDate(LocalDateTime.now());
-        category.setUpdatedDate(LocalDateTime.now());
+        Category category;
 
+        // Check if ID is present for Update
+        if (categoryDto.getId() != null) {
+            // Find existing category
+            category = categoryRepository.findById(categoryDto.getId())
+                    .orElseThrow(() -> new RuntimeException("Category not found with ID: " + categoryDto.getId()));
+
+            // Update existing category
+            category.setUpdatedDate(LocalDateTime.now());
+            category.setName(categoryDto.getName());
+            category.setDescription(categoryDto.getDescription());
+            category.setIsActive(categoryDto.getIsActive() != null ? categoryDto.getIsActive() : true);
+        } else {
+            // Create new category
+            category = modelMapper.map(categoryDto, Category.class);
+            category.setCreatedDate(LocalDateTime.now());
+            category.setIsActive(categoryDto.getIsActive() != null ? categoryDto.getIsActive() : true);
+        }
+
+        // Save the category (insert or update)
         Category savedCategory = categoryRepository.save(category);
-        return !ObjectUtils.isEmpty(savedCategory);
+        return savedCategory != null;
     }
 
 
