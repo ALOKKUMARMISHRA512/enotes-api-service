@@ -45,5 +45,13 @@ public class GlobleException {
     public ResponseEntity<String> handleGlobalException(Exception ex) {
         return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidationException(ValidationException ex) {
+    	
+        return new ResponseEntity<>(ex.getErrors(), HttpStatus.BAD_REQUEST);
+        
+    }
 
+    
 }

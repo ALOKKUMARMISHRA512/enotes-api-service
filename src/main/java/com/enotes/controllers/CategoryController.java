@@ -75,6 +75,7 @@ public class CategoryController {
             return ResponseEntity.ok("Category deleted successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found");
+            
         }
     }
 }
