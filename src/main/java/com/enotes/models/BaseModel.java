@@ -45,4 +45,7 @@ public abstract class BaseModel {
     @Column(name = "updated_date",insertable = false)
     @LastModifiedDate
     private LocalDateTime updatedDate;
+    
+    
+    
 }

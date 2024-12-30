@@ -48,6 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setName(categoryDto.getName());
             category.setDescription(categoryDto.getDescription());
             category.setIsActive(categoryDto.getIsActive() != null ? categoryDto.getIsActive() : true);
+            category.setDeleted(false);
         } else {
             // Create new category
             category = modelMapper.map(categoryDto, Category.class);
