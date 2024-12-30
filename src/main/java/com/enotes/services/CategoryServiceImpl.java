@@ -84,6 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (optionalCategory.isPresent()) {
             Category category = optionalCategory.get();
             category.setDeleted(true);
+            category.setIsActive(false);
             categoryRepository.save(category);
             return true;
         } else {
