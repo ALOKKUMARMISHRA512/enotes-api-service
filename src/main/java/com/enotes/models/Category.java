@@ -1,5 +1,7 @@
 package com.enotes.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,4 +28,12 @@ public class Category extends BaseModel {
 
     @Column(nullable = false)
     private String description;
+    
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+
+    @Column(name = "is_deleted")
+    @JsonProperty("deleted")
+    private boolean isDeleted = false;
+    
 }

@@ -1,3 +1,4 @@
+
 package com.enotes.services;
 
 import java.time.LocalDateTime;
@@ -72,22 +73,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryById(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        if(category.isPresent()) {
-            return category.get();
-        }
-        return null;
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found with ID: " + id));
     }
 
+    @Transactional
     @Override
     public boolean deleteCategoryById(Long id) {
-        // Check if category exists before deleting
-        if (categoryRepository.existsById(id)) {
-            Category cat = categoryRepository.getById(id);
-            cat.setDeleted(true);
-            categoryRepository.save(cat);
-            return true; // Successfully deleted
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
+        if (optionalCategory.isPresent()) {
+            Category category = optionalCategory.get();
+            category.setDeleted(true);
+            categoryRepository.save(category);
+            return true;
+        } else {
+            return false;
         }
-        return false; // Category not found
     }
 }
