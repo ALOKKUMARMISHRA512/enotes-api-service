@@ -31,7 +31,7 @@ public class validation {
 				}
 			}
 			
-			
+
 			if(ObjectUtils.isEmpty(categoryDto.getDescription())) {
 				error.put("desc","Descrption fields is empty or null");
 			}
@@ -44,12 +44,13 @@ public class validation {
 					error.put("isActiuve", "invaliude value isActive fields ");
 				}
 			}
-			
 		}
+		
+		
+
 		
 		if(!error.isEmpty()) {
 			throw new ValidationException(error);
-			
 		}
 		
 	}
