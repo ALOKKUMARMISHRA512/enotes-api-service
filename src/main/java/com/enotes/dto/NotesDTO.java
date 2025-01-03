@@ -20,6 +20,8 @@ public class NotesDTO {
 	
 	private String title;
 	
+    private String content; // Added this field
+	
 	private String description;
 	
 	private Category category;

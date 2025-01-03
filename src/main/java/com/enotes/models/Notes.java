@@ -27,6 +27,8 @@ public class Notes extends BaseModel{
 	
 	private String description;
 	
+    private String content; // Added this field
+	
 	@ManyToOne
 	private Category catrgory;
 	
