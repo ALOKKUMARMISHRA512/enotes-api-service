@@ -18,10 +18,10 @@ public class EnotesApplication {
 		return new AuditorConfig();
 	}
 
-	
 	public static void main(String[] args) {
 		SpringApplication.run(EnotesApplication.class, args);
 	
+		
 		
 	}
 

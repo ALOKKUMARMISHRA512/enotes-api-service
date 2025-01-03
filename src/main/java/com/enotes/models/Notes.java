@@ -1,11 +1,6 @@
 package com.enotes.models;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter   
 @Setter
-public class Notes extends BaseModel{
-	
+public class Notes extends BaseModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +21,10 @@ public class Notes extends BaseModel{
 	
 	private String description;
 	
-    private String content; // Added this field
+	private String content; // Added this field
 	
 	@ManyToOne
-	private Category catrgory;
+//	@JoinColumn(name = "category_id") // Specifies the foreign key column
+	private Category category;  // Fixed typo
 	
-
 }
