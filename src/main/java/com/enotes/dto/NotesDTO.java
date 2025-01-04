@@ -24,7 +24,7 @@ public class NotesDTO {
 	
 	private String description;
 	
-	private Category category;
+	private CategoryDto category;
 
     private Integer createdBy;
 

@@ -24,7 +24,7 @@ public class Notes extends BaseModel {
 	private String content; // Added this field
 	
 	@ManyToOne
-//	@JoinColumn(name = "category_id") // Specifies the foreign key column
+	@JoinColumn(name = "category_id") // Specifies the foreign key column
 	private Category category;  // Fixed typo
 	
 }

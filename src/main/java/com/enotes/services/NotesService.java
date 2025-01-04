@@ -6,13 +6,13 @@ import com.enotes.dto.NotesDTO;
 public interface NotesService {
 
     // CRUD Operations
-    Boolean saveNotes(NotesDTO notesDto);
+    public Boolean saveNotes(NotesDTO notesDto);
 
-    List<NotesDTO> getAllNotes();
+    public List<NotesDTO> getAllNotes();
 
-    NotesDTO getNoteById(Integer id);
+    public NotesDTO getNoteById(Integer id);
 
-    Boolean updateNoteById(Integer id, NotesDTO notesDto);
+    public Boolean updateNoteById(Integer id, NotesDTO notesDto);
 
-    Boolean deleteNoteById(Integer id);
+    public Boolean deleteNoteById(Integer id);
 }
