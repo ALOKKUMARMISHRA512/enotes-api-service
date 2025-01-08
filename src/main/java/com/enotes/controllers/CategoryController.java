@@ -39,6 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping("/get-category")
+    @CrossOrigin(origins = "http://localhost:3000") // Allow access from React app
     public ResponseEntity<CategoryResponseDto> getCategory(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -53,12 +54,14 @@ public class CategoryController {
     }
 
     @GetMapping("/get-active-categories")
+    @CrossOrigin(origins = "http://localhost:3000") // Allow access from React app
     public ResponseEntity<List<Category>> getActiveCategories() {
         List<Category> activeCategories = categoryService.getAllActiveCategories();
         return ResponseEntity.ok(activeCategories);
     }
 
     @GetMapping("/get-category-byId/{id}")
+    @CrossOrigin(origins = "http://localhost:3000") // Allow access from React app
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
         try {
             Category category = categoryService.getCategoryById(id);

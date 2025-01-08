@@ -38,6 +38,7 @@ public class NotesController {
 
     // 2. Get All Notes
     @GetMapping("/all")
+    @CrossOrigin(origins = "http://localhost:3000") // Allow access from React app
     public ResponseEntity<List<NotesDTO>> getAllNotes() {
         try {
             List<NotesDTO> notesList = notesService.getAllNotes();
@@ -55,6 +56,7 @@ public class NotesController {
 
     // 3. Get Note by ID
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000") // Allow access from React app
     public ResponseEntity<NotesDTO> getNoteById(@PathVariable Integer id) {
         try {
             NotesDTO note = notesService.getNoteById(id);
