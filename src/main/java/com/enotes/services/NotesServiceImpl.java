@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.enotes.dto.NotesDTO;
+import com.enotes.dto.NotesDTO.CategoryDto;
+import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.models.Notes;
+import com.enotes.repository.CategoryRepository;
 import com.enotes.repository.NotesRepository;
 
 @Service
@@ -20,7 +23,10 @@ public class NotesServiceImpl implements NotesService {
 
     @Autowired
     private ModelMapper modelMapper;
-
+    
+    @Autowired
+    private CategoryRepository categoryRepository;
+    
     // 1. Save Note
     @Override
     public Boolean saveNotes(NotesDTO notesDto) {
@@ -28,12 +34,22 @@ public class NotesServiceImpl implements NotesService {
             throw new IllegalArgumentException("Notes data cannot be null");
         }
 
+        checkCategoryExist(notesDto.getCategory());
+        
+        
         Notes notes = modelMapper.map(notesDto, Notes.class);
         notesRepository.save(notes);
         return true;
     }
 
-    // 2. Get All Notes
+    private void checkCategoryExist(CategoryDto categoryDto) {
+		// TODO Auto-generated method stub
+    	
+    	categoryRepository.findById(categoryDto.getId()).orElseThrow(()-> new ResourceNotFoundException("Category id invalid."));
+		
+	}
+
+	// 2. Get All Notes
     @Override
     public List<NotesDTO> getAllNotes() {
         List<Notes> notesList = notesRepository.findAll();
